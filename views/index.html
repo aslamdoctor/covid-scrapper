@@ -67,19 +67,10 @@
 							width="100%" 
 							@click="getCountryData"
 						>
-							Get Data
+							{{ loadingButton }}
 						</v-btn>
 					</v-form>
 
-					<v-alert
-						dense 
-						outlined
-						type="info"
-						v-if="loading" 
-						class="mt-5"
-						>
-						Loading...
-					</v-alert>
 					<div class="country-results text-center mt-5" 
 						v-if="country_data_found">
 						<v-row>
@@ -211,6 +202,14 @@
 								this.loading = false
 							});
 					}
+				}
+			},
+			computed:{
+				loadingButton(){
+					if(this.loading)
+						return 'Loading...'
+					else
+						return 'Get Data'
 				}
 			}
 		})
