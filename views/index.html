@@ -29,17 +29,17 @@
 					max-width="400" width="90%">
 					<v-row>
 						<v-col xs="4">
-							<div v-if="loading" class="body-1 light-blue darken-1 white--text mb-2">Loading...</div>
+							<div v-if="loadingMain" class="body-1 light-blue darken-1 white--text mb-2">Loading...</div>
 							<div v-else class="body-1 light-blue darken-1 white--text mb-2">{{ total_cases }}</div>
 							<div class="body-2">Total Cases</div>
 						</v-col>
 						<v-col xs="4">
-							<div v-if="loading" class="body-1 red white--text mb-2">Loading...</div>
+							<div v-if="loadingMain" class="body-1 red white--text mb-2">Loading...</div>
 							<div v-else class="body-1 red white--text mb-2">{{ total_deaths }}</div>
 							<div class="body-2">Deaths</div>
 						</v-col>
 						<v-col xs="4">
-							<div v-if="loading" class="body-1 green white--text mb-2">Loading...</div>
+							<div v-if="loadingMain" class="body-1 green white--text mb-2">Loading...</div>
 							<div v-else class="body-1 green white--text mb-2">{{ total_recovered }}</div>
 							<div class="body-2">Recovered</div>
 						</v-col>
@@ -155,16 +155,18 @@
 				total_new_deaths_country: 0,
 				total_recovered_country: 0,
 				country_data_found:false,
+				loadingMain:false,
 				loading:false,
 			},
 			created(){
-				this.loading = true
+				this.loadingMain = true
 
 				// Fetch All Countries
 				fetch("/countries")
 					.then(res => res.json())
 					.then(data => {
 						this.countries = data.countries
+						this.countries = this.countries.sort()
 					})
 				
 				// Fetch Worldwide Cases
@@ -175,6 +177,7 @@
 						this.total_deaths = data.total_deaths
 						this.total_recovered = data.total_recovered
 						this.loading = false
+						this.loadingMain = false
 					})
 			},
 			methods:{
