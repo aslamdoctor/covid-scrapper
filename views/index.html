@@ -150,8 +150,6 @@
 				loading:false,
 			},
 			created(){
-				this.loadingMain = true
-
 				// Fetch All Countries
 				fetch("/countries")
 					.then(res => res.json())
@@ -160,18 +158,25 @@
 						this.countries = this.countries.sort()
 					})
 				
-				// Fetch Worldwide Cases
-				fetch("/worldwide_cases")
-					.then(res => res.json())
-					.then(data => {
-						this.total_cases = data.total_cases
-						this.total_deaths = data.total_deaths
-						this.total_recovered = data.total_recovered
-						this.loading = false
-						this.loadingMain = false
-					})
+				this.fetchWorldData()
+				setInterval(() => {
+					this.fetchWorldData()
+				}, 30000);
 			},
 			methods:{
+				fetchWorldData(){
+					this.loadingMain = true
+					// Fetch Worldwide Cases
+					fetch("/worldwide_cases")
+						.then(res => res.json())
+						.then(data => {
+							this.total_cases = data.total_cases
+							this.total_deaths = data.total_deaths
+							this.total_recovered = data.total_recovered
+							this.loading = false
+							this.loadingMain = false
+						})
+				},
 				getCountryData(){
 					if(this.selected_country!==""){
 						const data = { country: this.selected_country }
