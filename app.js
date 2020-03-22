@@ -96,48 +96,6 @@ app.post('/fetch_country_data', function(req, res) {
 app.listen(port, () => console.log(`app listening on port http://localhost:${port}`))
 
 
-
-
-fetch(url)
-	.then(res => res.text())
-	.then(body => {
-		const $ = cheerio.load(body, {
-			normalizeWhitespace: true
-		})
-
-		// Fetch Worlwide Total Counts
-		let total_cases = 0;
-		let total_deaths = 0;
-		let total_recovered = 0;
-		$(".maincounter-number").each((index, el) => {
-			if(index == 0){
-				total_cases = $(el).text().trim()
-			}
-			if(index == 1){
-				total_deaths = $(el).text().trim()
-			}
-			if(index == 2){
-				total_recovered = $(el).text().trim()
-			}
-		})
-
-		console.log('Total cases in World:')
-		console.log({total_cases})
-		console.log({total_deaths})
-		console.log({total_recovered})
-
-		// Fetch Country Wise Cases
-		/* let totalIndia = getCasesCount('India', body)
-		if(totalIndia.found){
-			console.log('\nTotal cases in India:')
-			console.log(totalIndia)
-		}
-		else{
-			console.log('Nothing found for India')
-		} */
-		
-	})
-
 // Helper to get count for selected country
 function getCasesCount(country, body){
 	const $ = cheerio.load(body, {
@@ -182,12 +140,4 @@ function getCasesCount(country, body){
 		total_new_deaths,
 		total_recovered
 	}
-}
-
-// Error Helper
-function error(res, message){
-	return res.json({
-		error:true,
-		message: message
-	});
 }
