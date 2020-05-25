@@ -29,9 +29,9 @@ app.get('/countries', function(req, res) {
 		let countries = []
 		let country = "";
 		$("#main_table_countries_today tbody tr").each((index, el) => {
-			country = $(el).find('td').first().text().trim()
+			country = $(el).find('td:nth-child(2)').text().trim()
 			if(country!=='Total:'){
-				countries.push($(el).find('td').first().text().trim())
+				countries.push(country)
 			}
 		});
 		return res.json({countries});
@@ -110,7 +110,7 @@ function getCasesCount(country, body){
 	let total_recovered = 0
 
 	$("#main_table_countries_today tbody tr").each((index, el) => {
-		if($(el).find('td').first().text().trim() == country){
+		if($(el).find('td:nth-child(2)').text().trim() == country){
 			found = true
 			$(el).find('td').each((tdIndex, tdEl) => {
 				if(tdIndex == 1){
