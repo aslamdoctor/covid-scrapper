@@ -108,25 +108,35 @@ function getCasesCount(country, body){
 	let total_deaths = 0
 	let total_new_deaths = 0
 	let total_recovered = 0
+	let total_tests = 0
+	let death_rates = 0
+	let recovery_rates = 0
 
 	$("#main_table_countries_today tbody tr").each((index, el) => {
 		if($(el).find('td:nth-child(2)').text().trim() == country){
 			found = true
 			$(el).find('td').each((tdIndex, tdEl) => {
-				if(tdIndex == 1){
+				if(tdIndex == 2){
 					total_cases = $(tdEl).text().trim()
 				}
-				if(tdIndex == 2){
+				if(tdIndex == 3){
 					total_new_cases = $(tdEl).text().trim()
 				}
-				if(tdIndex == 3){
+				if(tdIndex == 4){
 					total_deaths = $(tdEl).text().trim()
 				}
-				if(tdIndex == 4){
+				if(tdIndex == 5){
 					total_new_deaths = $(tdEl).text().trim()
 				}
-				if(tdIndex == 5){
+				if(tdIndex == 6){
 					total_recovered = $(tdEl).text().trim()
+				}
+				if(tdIndex == 12){
+					total_tests = $(tdEl).text().trim();
+					death_rates = to_number(total_deaths) / to_number(total_tests)
+					death_rates = death_rates.toFixed(4);
+					recovery_rates = to_number(total_recovered) / to_number(total_tests)
+					recovery_rates = recovery_rates.toFixed(4);
 				}
 			})
 		}
@@ -138,6 +148,17 @@ function getCasesCount(country, body){
 		total_new_cases,
 		total_deaths, 
 		total_new_deaths,
-		total_recovered
+		total_recovered,
+		total_tests,
+		death_rates,
+		recovery_rates
 	}
+}
+
+
+
+function to_number(stringVar){
+	stringVar = stringVar.split(',').join('');
+	//console.log(stringVar);
+	return stringVar;
 }

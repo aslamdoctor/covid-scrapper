@@ -94,6 +94,17 @@
 								<div class="body-2">New Deaths</div>
 							</v-col>
 						</v-row>
+						
+						<v-row>
+							<v-col xs="6">
+								<div class="body-1 orange darken-1 white--text mb-1">{{ death_rates }}</div>
+								<div class="body-2">Death Rates</div>
+							</v-col>
+							<v-col xs="6">
+								<div class="body-1 orange darken-2 white--text mb-1">{{ recovery_rates }}</div>
+								<div class="body-2">Recovery Rates</div>
+							</v-col>
+						</v-row>
 
 						<v-row justify-center>
 							<v-col xs="6">
@@ -145,6 +156,8 @@
 				total_deaths_country: 0,
 				total_new_deaths_country: 0,
 				total_recovered_country: 0,
+				death_rates: 0,
+				recovery_rates: 0,
 				country_data_found:false,
 				loadingMain:false,
 				loading:false,
@@ -199,6 +212,8 @@
 									this.total_deaths_country = data.totals.total_deaths==""?0:data.totals.total_deaths
 									this.total_new_deaths_country = data.totals.total_new_deaths==""?0:data.totals.total_new_deaths
 									this.total_recovered_country = data.totals.total_recovered==""?0:data.totals.total_recovered
+									this.death_rates = data.totals.death_rates==""?0:data.totals.death_rates
+									this.recovery_rates = data.totals.recovery_rates==""?0:data.totals.recovery_rates
 									this.country_data_found = true
 								}
 								else{
